@@ -9,7 +9,7 @@ sys.path.append('/')
 
 pl.ion()
 np.random.seed(4)
-env = environment_2d.Environment(10, 6, 5)
+env = environment.Environment(10, 6, 5)
 pl.clf()
 env.plot()
 q = env.random_query()
@@ -22,7 +22,16 @@ if q is not None:
     prm = PRM(env, (x_start, y_start), (x_goal, y_goal), n_samples=10000)
 
     # Execute PRM
-    path = prm.executePRM()
+    path = prm.execute_path_finding()
+
+    # # save and display the network plot # uncomment to plot the network graph, uncommebnt line 256 in network.py
+    # pl.savefig('images/network_10000.png')
+    # pl.show()
+    #
+    # env.plot_query(x_start, y_start, x_goal, y_goal)
+    # env.plot()
+
+    prm.plot_solution()
 
     # save and display the prm plot
     pl.savefig('images/prm_10000.png')

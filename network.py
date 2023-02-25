@@ -1,9 +1,7 @@
 import random
 from typing import Tuple
-
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
-
 from environment import Environment
 
 
@@ -201,6 +199,7 @@ class PRM:
         self.start = start
         self.destination = destination
         self.samples = []
+        self.path = []
 
     def generate_samples(self) -> None:
         """
@@ -254,6 +253,9 @@ class PRM:
                     self.graph.add_node(end)
                     self.graph.add_edge(start, end, distances[index][j + 1])
 
+                    # # uncomment to draw the network of edges
+                    # self.environment.draw_line(start, end, linewidth=0.5)
+
     def find_shortest_path(self) -> list:
         """
         finds  and plots the shortest path from the start node to the destination node using Dijkstra's algorithm
@@ -261,17 +263,13 @@ class PRM:
         # get the distances and predecessors from the start node to all other nodes in the graph from Dijkstra's algorithm
         distances, previous = self.graph.dijkstra(self.start, self.destination)
 
-        # get the path from Dijsktra's algorithm's solution
-        path = self.graph.get_solution_path(previous, self.destination)
-
-        # plot the path
-        for i in range(len(path) - 1):
-            self.environment.draw_line(path[i], path[i + 1], linewidth=1)
+        # set the path from Dijsktra's algorithm's solution as the path attribute of the instance
+        self.path = self.graph.get_solution_path(previous, self.destination)
 
         # return the path
-        return path
+        return self.path
 
-    def executePRM(self) -> list:
+    def execute_path_finding(self) -> list:
         """
         executes the PRM algorithm by calling relevant methods
         """
@@ -286,3 +284,11 @@ class PRM:
 
         # return the path
         return path
+
+    def plot_solution(self):
+        """
+        plots the solution path
+        """
+        for i in range(len(self.path) - 1):
+            self.environment.draw_line(self.path[i], self.path[i + 1], linewidth=1)
+
