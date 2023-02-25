@@ -43,6 +43,11 @@ If 4 is passed as an argument to the seed() function, as it has been in the prog
 
 ## 10000 Milestones (Example)
 
+### Parameters:
+* number of milestones = 10000
+* max_rep = 200
+* num_neighbhors (k from the NearestNeighbhors model) = 15
+
 ### Network 
 
 When the program is run with the number of sample points set as 10000, the network formed by the sample points looks like this:
